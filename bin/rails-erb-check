@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+$:.unshift(File.expand_path('../../lib', __FILE__)) if $0 == __FILE__
+require 'rails-erb-check'
+
+ARGV.each do |filepath|
+  if RailsErbCheck.valid_syntax?(File.read(filepath))
+    puts "#{filepath}\e[34m => \e[32mvalid\e[0m"
+  else
+    puts "#{filepath}\e[34m => \e[31minvalid\e[0m"
+  end
+end
