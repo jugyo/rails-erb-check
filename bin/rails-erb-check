@@ -2,10 +2,22 @@
 $:.unshift(File.expand_path('../../lib', __FILE__)) if $0 == __FILE__
 require 'rails-erb-check'
 
+valid = []
+invalid = []
 ARGV.each do |filepath|
   if RailsErbCheck.valid_syntax?(File.read(filepath))
     puts "#{filepath}\e[34m => \e[32mvalid\e[0m"
+    valid << filepath
   else
     puts "#{filepath}\e[34m => \e[31minvalid\e[0m"
+    invalid << filepath
   end
+end
+
+puts
+if invalid.empty?
+  puts "\e[32m#{valid.size + invalid.size} files, #{invalid.size} invalids\e[0m"
+else
+  puts "\e[31m#{valid.size + invalid.size} files, #{invalid.size} invalids\e[0m"
+  abort
 end
